@@ -44,27 +44,27 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
+	var hello1 = __webpack_require__(3)();
 	var hello = __webpack_require__(1)();
-	var hello2 = __webpack_require__(3)();
 	module.exports = {};
 
 /***/ },
 /* 1 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = (__webpack_require__(2))("aK7Q");
+	module.exports = (__webpack_require__(2))("61kG");
 
 /***/ },
 /* 2 */
 /***/ function(module, exports) {
 
-	module.exports = lib_e22b97040c281cdf2d16;
+	module.exports = lib_15ce9223a4ab9d81bf65;
 
 /***/ },
 /* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = (__webpack_require__(2))("61kG");
+	module.exports = (__webpack_require__(2))("aK7Q");
 
 /***/ }
 /******/ ]);

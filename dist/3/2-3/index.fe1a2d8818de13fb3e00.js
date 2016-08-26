@@ -1,4 +1,3 @@
-var lib_e22b97040c281cdf2d16 =
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -41,35 +40,31 @@ var lib_e22b97040c281cdf2d16 =
 /******/ 	return __webpack_require__(0);
 /******/ })
 /************************************************************************/
-/******/ ({
-
-/***/ 0:
+/******/ ([
+/* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__;
+	var hello1 = __webpack_require__(3)();
+	var hello = __webpack_require__(1)();
+	module.exports = {};
 
 /***/ },
+/* 1 */
+/***/ function(module, exports, __webpack_require__) {
 
-/***/ "aK7Q":
-/***/ function(module, exports) {
-
-	module.exports = {
-	    hello:function(){
-	        console.log('hello 1');
-	    }
-	}
+	module.exports = (__webpack_require__(2))("61kG");
 
 /***/ },
-
-/***/ "61kG":
+/* 2 */
 /***/ function(module, exports) {
 
-	module.exports = {
-	    hello:function(){
-	        console.log('hello 2');
-	    }
-	}
+	module.exports = lib_15ce9223a4ab9d81bf65;
+
+/***/ },
+/* 3 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = (__webpack_require__(2))("aK7Q");
 
 /***/ }
-
-/******/ });
+/******/ ]);
