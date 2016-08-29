@@ -48,17 +48,19 @@ function globalConfig(config){
             config.entry[chunk] = './'+v;
             return chunk;
     });
+    config.init();
 }
 function targetConfig(config){
     var target = envArgs[envArgs.indexOf('--target')+1];
     target = path.parse(target).dir+'/'+path.parse(target).name;
     config.entry[target] = Helper.findEntryFile(target)[0];
+    config.init();
 }
 function run(config){
     webpack(config).run(function(err,stats){
         console.log('chunk error: '+err);
         console.log(stats.toString({colors:true}));
-    })
+    });
 }
 function runWatch(){
     var wp = new Watchpack();

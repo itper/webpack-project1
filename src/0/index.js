@@ -1,8 +1,6 @@
 require.ensure([],function(require){
-    var hello = require('../lib/2')(1);//123123
-})
-require.ensure([],function(require){
-    var hello = require('../lib/1')();//123123
-    
-})
+    require('../lib/2').hello(1);//123123
+});
+import hello from '../lib/3';
+hello();
 module.exports = {};

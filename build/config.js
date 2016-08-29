@@ -2,6 +2,7 @@ var path = require('path');
 
 module.exports = {
      outputPath: path.join(__dirname,'../','dist'),
+     publicPath:'http://public.chendi.cn/webpack/project/dist/',
      sourcePath: path.join(__dirname,'../','src'),
      cachePath: path.join(__dirname,'../','.cache'),
      libPath: path.join(__dirname,'../src','lib'),
