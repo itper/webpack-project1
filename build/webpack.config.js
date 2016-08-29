@@ -18,7 +18,7 @@ function getConfig(opt){
         output:{
             path:opt.outputPath,
             filename:'[name].[chunkhash].js',
-            chunkFilename:'auto-[name].[chunkhash].js'
+            chunkFilename:'chunk-[name].[chunkhash].js'
         },
         module:{
 
