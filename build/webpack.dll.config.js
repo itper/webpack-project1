@@ -39,6 +39,7 @@ function getConfig (opt){
                 }
             ]
         },
+        profile:true,
         eslint : {
           configFile: './.eslintrc.json'
         },
@@ -48,7 +49,7 @@ function getConfig (opt){
         ]
     };
 
-    if(__DEV__){
+    if(!__DEV__){
         config.plugins.push(
             new webpack.optimize.UglifyJsPlugin({
                 compress:{

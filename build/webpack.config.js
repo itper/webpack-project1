@@ -7,11 +7,7 @@ var __DEV__ = process.env.NODE_ENV!=='production';
 
 function getConfig(opt){
 
-    var outputPath = opt.outputPath;
-    var sourcePath = opt.sourcePath;
-    var cachePath = opt.cachePath;
 
-    var Helper = require('./helper')(opt);
 
     var config = {
         context:opt.sourcePath,
@@ -22,7 +18,22 @@ function getConfig(opt){
             chunkFilename:'chunk-[name].[chunkhash].js'
         },
         module:{
-
+        },
+        profile:true,
+        stats: {
+            hash: true,
+            version: true,
+            timings: true,
+            assets: true,
+            chunks: true,
+            modules: true,
+            reasons: true,
+            children: true,
+            source: false,
+            errors: true,
+            errorDetails: true,
+            warnings: true,
+            publicPath: true
         },
     };
     var entry = config.entry = {};
@@ -52,7 +63,9 @@ function getConfig(opt){
         });
       });
     };
-
+    config.resolve={
+        alias: opt.alias
+    };
     var loaders = config.module.loaders = [];
     var preLoaders = config.module.preLoaders = [];
     preLoaders.push({
@@ -75,7 +88,7 @@ function getConfig(opt){
     });
     loaders.push({
         test:/\.(css|scss)$/,
-        loaders:['style','css','postcss','sass'],
+        loaders:['style','css','postcss'],
         exclude:/node_modules/
     });
     loaders.push({
@@ -85,12 +98,15 @@ function getConfig(opt){
             'image-webpack'
         ]
     });
+    // loaders.push({
+
+    // });
     plugins.push(new HashedModuleIdsPlugin());
     plugins.push( new webpack.DllReferencePlugin({context:__dirname,manifest:require('./vendor.manifest.json')}));
     if(opt.libPath){
         plugins.push( new webpack.DllReferencePlugin({context:__dirname,manifest:require('./lib.manifest.json')}));
     }
-    if(__DEV__){
+    if(!__DEV__){
         plugins.push(
             new webpack.optimize.UglifyJsPlugin({
                 compress:{

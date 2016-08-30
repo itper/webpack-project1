@@ -17,6 +17,10 @@
     "plugins": [
         "react"
     ],
+    "globals":{
+        "console":true,
+        "React":true
+    },
     "rules": {
         "indent": [
             "error",
@@ -26,6 +30,9 @@
             "error",
             "unix"
         ],
+        "no-console":0,
+        "react/jsx-uses-react": "error",
+        "react/jsx-uses-vars": "error",
         "quotes": [
             "error",
             "single"

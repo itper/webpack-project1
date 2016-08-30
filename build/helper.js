@@ -21,7 +21,7 @@ Helper.prototype.findLib = function(){
     return glob.sync(path.join(this.libPath,'**/*.@(js|jsx)'),{}).map(function(file){return './'+path.relative(this.context,file);}.bind(this));
 }
 Helper.prototype.findEntryFile = function(file){
-    return glob.sync(path.join(this.context,file+'.*'));
+    return glob.sync(path.join(this.context,file+'.@(js|jsx)'));
 }
 Helper.prototype.findFileEntry = function(file){
     var dir = path.dirname(file);
