@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "cd build && node webpack.dev.js --global",
+    "server": "node server.js"
   },
   "author": "",
   "license": "ISC",
@@ -24,7 +26,10 @@
     "watchpack": "^1.1.0",
     "webpack": "^1.13.2",
     "webpack-dev-server": "^1.15.0",
-    "webpack-md5-hash": "0.0.5"
+    "webpack-dev-middleware": "^1.2.0",
+    "webpack-hot-middleware": "^2.0.0",
+    "webpack-md5-hash": "0.0.5",
+    "express": "^4.13.3"
   },
   "dependencies": {
     "react": "^15.3.1",
