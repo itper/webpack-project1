@@ -2,7 +2,7 @@ var path = require('path');
 
 module.exports = {
      outputPath: path.join(__dirname,'../','dist'),
-     publicPath:'http://localhost/dist/',
+     publicPath:'http://localhost:9000/dist/',
      sourcePath: path.join(__dirname,'../','src'),
      cachePath: path.join(__dirname,'../','.cache'),
      libPath: path.join(__dirname,'../src','lib'),
