@@ -1,6 +1,8 @@
 var path = require('path');
+var MemoryFileSystem = require("memory-fs");
 var webpack = require('webpack');
 var options = require('./config.js');
+var fs = require('fs');
 var Helper = require('./helper')(options);
 var Watchpack = require("watchpack");
 var WebpackDevServer = require('webpack-dev-server');
@@ -10,6 +12,7 @@ var force = envArgs.indexOf('--force')!==-1;
 var watch = envArgs.indexOf('--watch')!==-1;
 var target = envArgs.indexOf('--target')!==-1;
 var hot = envArgs.indexOf('--hot')!==-1;
+console.log(process.env.NODE_ENV);
 if(envArgs.indexOf('--help')!==-1){
     console.log('\nUsage: node webpack.dev.js\n');
     console.log('Options:');
@@ -21,17 +24,19 @@ if(envArgs.indexOf('--help')!==-1){
 if(force){
     forceUpdate();
 }
-if(targetGlobal){
-    var config = require('./webpack.config')(options);
-    config.entry={};
-    globalConfig(config);
-    run(config);
-}else{
-    if(target){
+if(!hot){
+    if(targetGlobal){
         var config = require('./webpack.config')(options);
         config.entry={};
-        targetConfig(config);
+        globalConfig(config);
         run(config);
+    }else{
+        if(target){
+            var config = require('./webpack.config')(options);
+            config.entry={};
+            targetConfig(config);
+            run(config);
+        }
     }
 }
 function forceUpdate(){
@@ -61,7 +66,8 @@ function targetConfig(config){
     return target;
 }
 function run(config){
-    webpack(config).run(function(err,stats){
+    var compiler =webpack(config);
+    compiler.run(function(err,stats){
         console.log('chunk error: '+err);
         console.log(stats.toString({colors:true}));
     });
@@ -92,16 +98,37 @@ if(watch){
 }
 
 if(hot){
-    var config = require('./webpack.config')(options);
-    config.entry={};
-    var target = targetConfig(config);
-    devServer(config,target);
+    devServer();
 }
 function devServer(config,target){
-    console.log(config,target);
-    config.entry[target].unshift("webpack-dev-server/client?http://public.chendi.cn/webpack/dist/app/index.html");
-    var compiler = webpack(config);
-    var server = new WebpackDevServer(compiler,{contentBase:'http://public.chendi.cn/webpack/project/dist/app'});
-    server.listen(9090);
 
+    var dllCompiler = webpack(require('./webpack.dll.config')(options));
+    dllCompiler.plugin("done", function(stats) {
+        var config = require('./webpack.config')(options);
+        config.entry={};
+        var target = targetConfig(config);
+        // config.entry[target].unshift("webpack-hot-middleware/client");
+        config.entry[target].unshift("webpack-dev-server/client?http://localhost:9090/");
+        // config.entry[target].unshift('webpack/hot/only-dev-server');
+        // config.module.loaders[0].loaders.unshift('react-hot');
+        // console.log(config.module.loaders[0].loaders);
+        // config.plugins.push(new webpack.HotModuleReplacementPlugin());
+        var compiler = webpack(config);
+        var server = new WebpackDevServer(compiler,{
+            hot: true,
+            historyApiFallback: true,
+            
+            // contentBase:'http://localhost:9090/dist/app/',
+            // publicPath:'/dist/app'
+        });
+        compiler.outputFileSystem.mkdirpSync(options.outputPath);
+        compiler.outputFileSystem.writeFileSync(path.join(options.outputPath,'lib.js'),fs.readFileSync(path.join(options.outputPath,'lib.js'),'utf8'));
+        compiler.outputFileSystem.writeFileSync(path.join(options.outputPath,'vendor.js'),fs.readFileSync(path.join(options.outputPath,'vendor.js'),'utf8'));
+        server.listen(9090);
+        console.log(stats.toString({colors:true}));
+    });
+    dllCompiler.run(function(err,stats){
+        console.log(err);
+        console.log('dll123');
+    });
 }

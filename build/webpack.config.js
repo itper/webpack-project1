@@ -3,19 +3,17 @@ var HashedModuleIdsPlugin = require('./HashedModuleIdsPlugin');
 var webpack = require('webpack');
 var glob = require('glob');
 var HtmlwebpackPlugin = require('html-webpack-plugin');
+var __HOT__ = process.argv.indexOf('--hot')!==-1;
 var __DEV__ = process.env.NODE_ENV!=='production';
-
 function getConfig(opt){
-
-
 
     var config = {
         context:opt.sourcePath,
         output:{
             publicPath:opt.publicPath,
             path:opt.outputPath,
-            filename:'[name].[chunkhash].js',
-            chunkFilename:'chunk-[name].[chunkhash].js'
+            filename:__HOT__?'[name].js':'[name].[chunkhash].js',
+            chunkFilename:__HOT__?'chunk-[name].js':'chunk-[name].[chunkhash].js'
         },
         module:{
         },
@@ -40,11 +38,7 @@ function getConfig(opt){
     var plugins = config.plugins = [
     ];
     config.init = function(){
-        var manifest = glob.sync('./*.manifest.json');
         var other = '';
-        manifest.map(function(j){
-             other+='<script src="'+opt.publicPath+(require(j).name.replace('_','.')+'.js')+'"></script>';
-        });
         for(var e in this.entry){
             config.plugins.push(
               new HtmlwebpackPlugin({filename: path.dirname(e)+'/index.html',chunks: [e],template: opt.sourcePath + '/'+ e+'.html'})
@@ -53,6 +47,22 @@ function getConfig(opt){
         plugins.push(function() {
           this.plugin('compilation', function(compilation) {
             compilation.plugin('html-webpack-plugin-after-emit', function(file, callback) {
+                var fs = compilation.compiler.outputFileSystem;
+                // if('MemoryFileSystem'===fs.constructor.name){
+                //     var dir = fs.readdirSync(opt.buildPath+'/');
+                //     for(var j in dir){
+                //         j = dir[j];
+                //         if(j.indexOf('.manifest.json')>0){
+                //             other+='<script src="'+opt.publicPath+(JSON.parse(fs.readFileSync(path.join(__dirname,j))).name+'.js')+'"></script>';
+                //         }
+                //     }
+                // }else{
+                    var manifest = glob.sync('./*.manifest.json');
+                    var other = '';
+                    manifest.map(function(j){
+                         other+='<script src="'+opt.publicPath+(require(j).name.replace('_','.')+'.js')+'"></script>';
+                    });
+                // }
                 var htmlSource = file.html.source();
                 htmlSource = htmlSource.replace(/(<\/head>)/, other + '$1');
                 file.html.source = function() {
@@ -80,11 +90,7 @@ function getConfig(opt){
         test:/\.(js|jsx)$/,
         exclude:/node_modules/,
         include:opt.sourcePath,
-        loader:'babel',
-        query:{
-            presets:['es2015','react'],
-            cacheDirectory:opt.cacheDirectory
-        }
+        loader:'babel?babelrc=false&extends='+path.join(__dirname,'.babelrc'),
     });
     loaders.push({
         test:/\.(css|scss)$/,
