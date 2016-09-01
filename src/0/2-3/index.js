@@ -1,3 +1,5 @@
 require('../../lib/1')();
 require('../../lib/2')();
-module.exports = {};
+console.log('0/index.js');
+module.exports = {
+};
