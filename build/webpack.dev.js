@@ -12,7 +12,6 @@ var force = envArgs.indexOf('--force')!==-1;
 var watch = envArgs.indexOf('--watch')!==-1;
 var target = envArgs.indexOf('--target')!==-1;
 var hot = envArgs.indexOf('--hot')!==-1;
-console.log(process.env.NODE_ENV);
 if(envArgs.indexOf('--help')!==-1){
     console.log('\nUsage: node webpack.dev.js\n');
     console.log('Options:');
@@ -108,11 +107,11 @@ function devServer(config,target){
         config.entry={};
         var target = targetConfig(config);
         // config.entry[target].unshift("webpack-hot-middleware/client");
-        config.entry[target].unshift("webpack-dev-server/client?http://localhost:9090/");
+        config.entry[target].unshift("webpack-dev-server/client?http://localhost:9090/","webpack/hot/dev-server");
         // config.entry[target].unshift('webpack/hot/only-dev-server');
         // config.module.loaders[0].loaders.unshift('react-hot');
         // console.log(config.module.loaders[0].loaders);
-        // config.plugins.push(new webpack.HotModuleReplacementPlugin());
+        config.plugins.push(new webpack.HotModuleReplacementPlugin());
         var compiler = webpack(config);
         var server = new WebpackDevServer(compiler,{
             hot: true,
@@ -124,7 +123,7 @@ function devServer(config,target){
         compiler.outputFileSystem.mkdirpSync(options.outputPath);
         compiler.outputFileSystem.writeFileSync(path.join(options.outputPath,'lib.js'),fs.readFileSync(path.join(options.outputPath,'lib.js'),'utf8'));
         compiler.outputFileSystem.writeFileSync(path.join(options.outputPath,'vendor.js'),fs.readFileSync(path.join(options.outputPath,'vendor.js'),'utf8'));
-        server.listen(9090);
+        server.listen(options.port);
         console.log(stats.toString({colors:true}));
     });
     dllCompiler.run(function(err,stats){

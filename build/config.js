@@ -12,6 +12,7 @@ module.exports = {
      vendors:['react','react-router','redux','react-dom','react-redux'],
      entry:'**/index.@(jsx|js)',
      node_module_path:path.join(__dirname,'../','node_modules'),
+     port:9090,
      alias:{
           // 'react':path.join(__dirname,'../','node_modules')+'/react/react.js',
           // 'react-dom':path.join(__dirname,'../','node_modules')+'/react-dom/index.js',

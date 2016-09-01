@@ -4,5 +4,7 @@ import Application from './components/Application.jsx';
 
 
 render((
-    <Application/>
+    <div>
+        <Application/>
+    </div>
 ),document.getElementById('root'));

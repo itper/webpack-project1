@@ -20,6 +20,7 @@ function getConfig(opt){
         profile:true,
         stats: {
             hash: true,
+            progress:true,
             version: true,
             timings: true,
             assets: true,
