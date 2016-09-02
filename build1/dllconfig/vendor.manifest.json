@@ -1,5 +1,5 @@
 {
-  "name": "vendor_bcfea073578177d10093",
+  "name": "vendor",
   "content": {
     "../node_modules/react-redux/node_modules/invariant/browser.js": "xrRL",
     "../node_modules/react/lib/React.js": "YmlN",

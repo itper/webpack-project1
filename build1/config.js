@@ -1,5 +1,4 @@
 var path = require('path');
-var __HOT__ = process.argv.indexOf('--hot')!==-1;
 
 module.exports = {
      outputPath: path.join(__dirname,'../','dist'),
@@ -10,9 +9,11 @@ module.exports = {
      cachePath: path.join(__dirname,'../','.cache'),
      libPath: path.join(__dirname,'../src','lib'),
      vendors:['react','react-router','redux','react-dom','react-redux'],
+     manifestPath:path.join(__dirname,'./dllconfig'),
      entry:'**/index.@(jsx|js)',
      node_module_path:path.join(__dirname,'../','node_modules'),
      port:9090,
+     babelrc:path.join(__dirname,'./.babelrc'),
      alias:{
           // 'react':path.join(__dirname,'../','node_modules')+'/react/react.js',
           // 'react-dom':path.join(__dirname,'../','node_modules')+'/react-dom/index.js',

@@ -3,6 +3,7 @@ var MemoryFileSystem = require("memory-fs");
 var webpack = require('webpack');
 var options = require('./config.js');
 var fs = require('fs');
+var glob = require('glob');
 var Helper = require('./helper')(options);
 var Watchpack = require("watchpack");
 var WebpackDevServer = require('webpack-dev-server');
@@ -84,7 +85,6 @@ function runWatch(){
         if(t){
             t = path.parse(t).dir+'/'+path.parse(t).name;
             config.entry[t] = Helper.findEntryFile(t)[0];
-            console.log(config);
             run(config);
         }
     });
@@ -97,37 +97,38 @@ if(watch){
 }
 
 if(hot){
-    devServer();
+    devServerForce();
 }
-function devServer(config,target){
-
+function devServerForce(config,target){
     var dllCompiler = webpack(require('./webpack.dll.config')(options));
     dllCompiler.plugin("done", function(stats) {
-        var config = require('./webpack.config')(options);
-        config.entry={};
-        var target = targetConfig(config);
-        // config.entry[target].unshift("webpack-hot-middleware/client");
-        config.entry[target].unshift("webpack-dev-server/client?http://localhost:9090/","webpack/hot/dev-server");
-        // config.entry[target].unshift('webpack/hot/only-dev-server');
-        // config.module.loaders[0].loaders.unshift('react-hot');
-        // console.log(config.module.loaders[0].loaders);
-        config.plugins.push(new webpack.HotModuleReplacementPlugin());
-        var compiler = webpack(config);
-        var server = new WebpackDevServer(compiler,{
-            hot: true,
-            historyApiFallback: true,
-            
-            // contentBase:'http://localhost:9090/dist/app/',
-            // publicPath:'/dist/app'
-        });
-        compiler.outputFileSystem.mkdirpSync(options.outputPath);
-        compiler.outputFileSystem.writeFileSync(path.join(options.outputPath,'lib.js'),fs.readFileSync(path.join(options.outputPath,'lib.js'),'utf8'));
-        compiler.outputFileSystem.writeFileSync(path.join(options.outputPath,'vendor.js'),fs.readFileSync(path.join(options.outputPath,'vendor.js'),'utf8'));
-        server.listen(options.port);
-        console.log(stats.toString({colors:true}));
+        devServer(config,target);
     });
     dllCompiler.run(function(err,stats){
         console.log(err);
-        console.log('dll123');
     });
+}
+
+function devServer(config,target){
+    var config = require('./webpack.config')(options);
+    config.entry={};
+    var target = targetConfig(config);
+    config.entry[target].unshift("webpack-dev-server/client?http://localhost:9090/","webpack/hot/dev-server");
+    config.plugins.push(new webpack.HotModuleReplacementPlugin());
+    var compiler = webpack(config);
+    var server = new WebpackDevServer(compiler,{
+        hot: true,
+        historyApiFallback: true,
+    });
+    server.app.use('*',function(req,res,next){
+        console.log(req.originalUrl);
+        next();
+    });
+    compiler.outputFileSystem.mkdirpSync(options.outputPath);
+    var manifest = glob.sync(__dirname+'/*.manifest.json');
+    var other = '';
+    manifest.map(function(j){
+        compiler.outputFileSystem.writeFileSync(path.join(options.outputPath,require(j).name.replace('_','.')+'.js'),fs.readFileSync(path.join(options.outputPath,require(j).name.replace('_','.')+'.js'),'utf8'));
+    });
+    server.listen(options.port);
 }
