@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "node webpack.dev.js --colors --display-modules --profile --force",
-    "dev": "node webpack.dev.js --colors --display-modules --profile --hot --target app/index",
+    "build": "./build/dev_cli.js",
+    "dev": "node ./build/dev_cli.js",
     "server": "node server.js"
   },
   "author": "",
@@ -20,6 +20,7 @@
     "babel-preset-es2015": "^6.13.2",
     "babel-preset-react": "^6.11.1",
     "babel-preset-react-hmre": "^1.1.1",
+    "cli-table": "^0.3.1",
     "colors": "^1.1.2",
     "commander": "^2.9.0",
     "css-loader": "^0.24.0",
@@ -28,6 +29,7 @@
     "eslint-plugin-react": "^6.2.0",
     "eventsource-polyfill": "^0.9.6",
     "express": "^4.13.3",
+    "fs-extra": "^0.30.0",
     "glob": "^7.0.5",
     "html-webpack-plugin": "^2.22.0",
     "koa": "^1.2.2",
