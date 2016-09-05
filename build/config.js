@@ -4,7 +4,7 @@ module.exports = {
      outputPath: path.join(__dirname,'../','dist'),
      buildPath:path.join(__dirname),
      // publicPath:'http://public.chendi.cn/webpack/project/dist/',
-     publicPath:__HOT__?'http://localhost:9090/':'http://public.chendi.cn/webpack/project/dist/',
+     publicPath:__HOT__?'http://localhost:9090/':'http://public.chendi.cn/webpack-project1/dist/',
      sourcePath: path.join(__dirname,'../','src'),
      cachePath: path.join(__dirname,'../','.cache'),
      libPath: path.join(__dirname,'../src','lib'),
@@ -48,29 +48,9 @@ module.exports = {
           // "chunksSort":true,// (string) sort the chunks by that field
           // "assetsSort":true,// (string) sort the assets by that field
           "colors":true,
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-     }
+     },
      // url-loader-limit:8000
      //entry:['./0/1-1/index.js','./0/2-3/index.js'],
+     devtool:"#source-map",
+     // devtool:"#cheap-module-eval-source-map",
 };

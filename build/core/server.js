@@ -11,7 +11,7 @@ function Server(compiler,config){
     this.config = config;
     var dev = webpackMiddleware.devMiddleware(compiler,{
         noInfo: false,
-        quiet: false,
+        quiet: true,
         headers: { "X-Custom-Header": "yes" },
         stats: {
             colors: true

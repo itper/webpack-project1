@@ -118,6 +118,7 @@ function Config(entry,opt){
     };
     this.stats = stats;
     this.context=opt.sourcePath;
+    this.devtool = opt.devtool;
     this.output={
         publicPath:opt.publicPath,
         path:opt.outputPath,

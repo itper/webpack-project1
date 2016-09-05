@@ -1,5 +1,5 @@
 {
-  "name": "vendor_bcfea073578177d10093",
+  "name": "vendor_348144aa445c17740216",
   "content": {
     "../node_modules/react-redux/node_modules/invariant/browser.js": "xrRL",
     "../node_modules/react/lib/React.js": "YmlN",
@@ -105,7 +105,8 @@
     "../node_modules/redux/node_modules/lodash/_isHostObject.js": "W6G7",
     "../node_modules/redux/node_modules/lodash/isObjectLike.js": "4TpM",
     "../node_modules/redux/node_modules/symbol-observable/index.js": "KkAH",
-    "../node_modules/redux/node_modules/symbol-observable/ponyfill.js": "6PFS",
+    "../node_modules/redux/node_modules/symbol-observable/lib/index.js": "up5z",
+    "../node_modules/redux/node_modules/symbol-observable/lib/ponyfill.js": "GQys",
     "../node_modules/redux/lib/combineReducers.js": "7fJc",
     "../node_modules/redux/lib/utils/warning.js": "1C4T",
     "../node_modules/redux/lib/bindActionCreators.js": "smd9",
