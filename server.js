@@ -1,41 +1,43 @@
-var path = require('path');
-var express = require('express');
-var webpack = require('webpack');
-var options = require('./build/config.js');
-var config = require('./build/webpack.config')(options);
-var fs = require('fs');
+// Dependencies
+import express from 'express';
+import React from 'react';
+import ReactDOMServer from 'react-dom/server';
+import { match, RouterContext, browserHistory } from 'react-router';
+import fs from 'fs';
 
-var app = express();
-var compiler = webpack(config);
-app.use(require('webpack-dev-middleware')(compiler, {
-  noInfo: true,
-  publicPath: config.output.publicPath
-}));
+// Routes
+import routes from './src/router';
 
-app.use(require('webpack-hot-middleware')(compiler));
+// consts
+const app = express();
 
-app.get('*', function(req, res) {
-	console.log(req.path);
-	console.log(/.js|.css|.html|.ico/.test(req.path));
-	if(!/.js|.css|.html|.ico/.test(req.path)){
-		var urls = req.path.split('/');
-		var url = urls[1];
-		if(url) {
-			url = 'dist/'+url;
-		}
-		console.log(path.join(__dirname, url, 'index.html'));
-		res.sendFile(path.join(__dirname, url, 'index.html'));
-	} else {
-		res.sendFile(path.join(__dirname, req.path));
-	}
+// Setup App
+app.use(express.static(__dirname + '/public'));
+
+// Start App
+app.use((req, res, next) => {
+	let urls = req.url.split('/');
+	let url = urls[1];
+	console.log(req.url);
+	// Create Router
+	match({ routes, location: req.url, history: browserHistory }, (error, redirect, renderProps) => {
+      if (error)
+        res.status(500).send(error.message);
+      else {
+        let html = ReactDOMServer.renderToString(<RouterContext {...renderProps} />);
+        fs.readFile('./dist/'+url+'/index.html', 'utf-8', function(err, data){
+        	if(err) {
+       			res.end('<!DOCTYPE html>' + html);
+       			return;
+        	}
+			var tempHtml = data.replace(/(<div id=\"app\">)/, '$1'+html);
+			res.end(tempHtml);
+        });
+      }
+  });
 });
 
-	
-app.listen(9000, 'localhost', function(err) {
-  if (err) {
-    console.log(err);
-    return;
-  }
-
-  console.log('Listening at http://localhost:9000');
+// Start server
+app.listen(3001, () => {
+  console.log('React ES6 Server Side Render app listening at http://localhost:3001');
 });
