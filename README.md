@@ -42,3 +42,32 @@ localhost:9000/1  进入入口1中的index.html
 >./build/dev_cli.js [dir]
 
 
+##CNPM
+
+安装
+
+>npm install -g cnpm --registry=https://registry.npm.taobao.org
+
+registry url
+
+[http://10.252.137.119:7001](http://10.252.137.119:7001)
+
+安装依赖
+
+>
+cnpm install --save hello --registry=http://10.252.137.119:7001
+
+设置registry地址.
+
+>
+cnpm set registry http://10.252.137.119:7001
+
+web
+
+[http://10.252.137.119:7001](http://10.252.137.119:7002)
+
+发布
+
+> cnpm login
+
+> cnpm publish

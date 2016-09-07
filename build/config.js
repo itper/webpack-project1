@@ -51,6 +51,6 @@ module.exports = {
      },
      // url-loader-limit:8000
      //entry:['./0/1-1/index.js','./0/2-3/index.js'],
-     devtool:"#source-map",
-     // devtool:"#cheap-module-eval-source-map",
+     // devtool:"#source-map",
+     devtool:"#cheap-module-eval-source-map",
 };
