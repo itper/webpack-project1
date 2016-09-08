@@ -7,6 +7,6 @@ export default class Application1 extends Component{
     render(){
         console.log(1);
         return (
-            <div onClick={onclick}>1123123</div> );
+            <div onClick={onclick}>123123123 d</div> );
     }
 }
