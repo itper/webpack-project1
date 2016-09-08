@@ -171,7 +171,7 @@ Config.prototype.__getLoader = function (){
     });
     this.module.loaders.push({
         test:/\.(css|scss)$/,
-        loaders:['style','css?modules','postcss'],
+        loaders:['style','css?modules&localIdentName=[hash:base64:5]','postcss'],
         exclude:/node_modules/
     });
     this.module.loaders.push({
