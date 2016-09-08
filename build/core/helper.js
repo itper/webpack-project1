@@ -197,6 +197,10 @@ function DllConfig(entry,opt){
     this.entry.lib = entry;
     this.stats = stats;
     this.context=opt.sourcePath;
+    this.resolve = {
+        alias: opt.alias,
+        extensions:opt.extensions,
+    };
     this.output={
         publicPath:opt.publicPath,
         path:opt.outputPath,
