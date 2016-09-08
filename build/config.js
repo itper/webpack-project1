@@ -4,7 +4,7 @@ module.exports = {
      outputPath: path.join(__dirname,'../','dist'),
      buildPath:path.join(__dirname),
      // publicPath:'http://public.chendi.cn/webpack/project/dist/',
-     publicPath:__HOT__?'http://localhost:9090/':'[your dist host]'//like 'http://public.chendi.cn/webpack-project1/dist/',
+     publicPath:__HOT__?'http://localhost:9090/':'[your dist host]',//like 'http://public.chendi.cn/webpack-project1/dist/',
      sourcePath: path.join(__dirname,'../','src'),
      cachePath: path.join(__dirname,'../','.cache'),
      libPath: path.join(__dirname,'../src','lib'),
