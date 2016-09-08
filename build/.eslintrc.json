@@ -26,10 +26,10 @@
             "error",
             4
         ],
-        "linebreak-style": [
-            "error",
-            "unix"
-        ],
+        // "linebreak-style": [
+        //     "error",
+        //     "unix"
+        // ],
         "no-console":0,
         "react/jsx-uses-react": "error",
         "react/jsx-uses-vars": "error",
