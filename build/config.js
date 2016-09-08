@@ -16,6 +16,7 @@ module.exports = {
      babelrcdll:path.join(__dirname,'./.babelrc-dll'),
      babelrchot:path.join(__dirname,'./.babelrc-hot'),
      babelrc:path.join(__dirname,'./.babelrc'),
+     extensions:['','.js','.jsx'],
      alias:{
           // 'react':path.join(__dirname,'../','node_modules')+'/react/react.js',
           // 'react-dom':path.join(__dirname,'../','node_modules')+'/react-dom/index.js',

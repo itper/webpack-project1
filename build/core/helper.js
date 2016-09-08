@@ -111,7 +111,8 @@ function Config(entry,opt){
     this.module.loaders = [];
     this.module.preLoaders = [];
     this.resolve = {
-        alias: opt.alias
+        alias: opt.alias,
+        extensions:opt.extensions,
     };
     this.eslint = {
         configFile: __dirname+'/../.eslintrc.json'
