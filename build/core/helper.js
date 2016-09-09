@@ -171,7 +171,12 @@ Config.prototype.__getLoader = function (){
     });
     this.module.loaders.push({
         test:/\.(css|scss)$/,
-        loaders:['style','css?modules&localIdentName=[hash:base64:5]','postcss'],
+        loaders:['style','css','postcss'],
+        exclude:/node_modules/
+    });
+    this.module.loaders.push({
+        test:/\.module_(css|scss)$/,
+        loaders:['style','css?modules&importLoaders=1&localIdentName=[hash:base64:5]','postcss'],
         exclude:/node_modules/
     });
     this.module.loaders.push({
