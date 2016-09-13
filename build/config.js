@@ -17,13 +17,15 @@ module.exports = {
      babelrchot:path.join(__dirname,'./.babelrc-hot'),
      babelrc:path.join(__dirname,'./.babelrc'),
      extensions:['','.js','.jsx'],
+     dataurlLimit:8000,
      alias:{
+          'jquery':path.join(__dirname,'../','node_modules','@ganji/zepto/zepto.js'),
           // 'react':path.join(__dirname,'../','node_modules')+'/react/react.js', 
           // 'react-dom':path.join(__dirname,'../','node_modules')+'/react-dom/index.js',
           // 'react-router': path.join(__dirname,'../','node_modules') + '/react-router/lib/index.js',
           // 'react-redux': path.join(__dirname,'../','node_modules') + '/react-redux/lib/index.js',
           // 'redux': path.join(__dirname,'../','node_modules') + '/redux/lib/index.js',
-          // 'redux-thunk': path.join(__dirname,'../','node_modules') + '/redux-thunk/lib/index.js'
+          // 'redux-thunk': path.join(__dirname,'../','node_modules') + '/redux-thunk/lib/index.js',
      },
      logconfig:{
           "none":true,// (or false) output nothing
@@ -36,4 +38,7 @@ module.exports = {
      },
      // devtool:"#source-map",
      devtool:"#cheap-module-eval-source-map",
+     provide:{
+          $:'jquery'
+     }
 };

@@ -151,6 +151,9 @@ Config.prototype.__getPlugin = function(){
         })
         );
     }
+    this.plugins.push(new webpack.ProvidePlugin(
+        this.opt.provide
+    ));
     return this;
 };
 Config.prototype.__getPreloader = function (){
@@ -182,10 +185,15 @@ Config.prototype.__getLoader = function (){
     this.module.loaders.push({
         test:/\.(?:jpg|gif|png|svg)$/,
         loaders:[
-            'url-loader?limit=8000&name=img/[hash].[ext]',
+            'url-loader?limit='+this.opt.dataurlLimit+'&name=img/[hash].[ext]',
             'image-webpack'
         ]
     });
+    // this.module.loaders.push({
+    //     test:/\.(jpg|gif|png|svg)$/,
+    //     loader:'file-loader'
+    // });
+    // this.module.loaders.push({ test: require.resolve('jquery'), loader: 'exports?window.$!script' });
     return this;
     
 };
@@ -226,7 +234,8 @@ function DllConfig(entry,opt){
                 exclude:/node_modules/,
                 include:opt.sourcePath,
                 loader:'babel?babelrc=false&extends='+this.opt.babelrcdll,
-            }
+            },
+            // { test: require.resolve('jquery'), loader: "script" }
         ]
     };
     this.eslint = {
@@ -236,6 +245,9 @@ function DllConfig(entry,opt){
         new webpack.DllPlugin({path:opt.manifestPath+'/'+'[name].manifest.json',name:__HOT__?'[name]':'[name]_[chunkhash]',context:path.join(__dirname,'../')}),
         new HashedModuleIdsPlugin(),
     ];
+    this.plugins.push(new webpack.ProvidePlugin(
+        this.opt.provide
+    ));
 
     if(!__DEV__){
         this.plugins.push(
