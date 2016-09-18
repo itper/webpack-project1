@@ -23,7 +23,6 @@ function Server(compiler,config){
 
     this.loadDll(compiler.outputFileSystem);
     this.app = new Koa();
-    //req.url = rewriteTarget;
     router.get('*',function(ctx,next){
         var rewriteTarget = '/'+config.target;
         ctx.req.url = rewriteTarget;
