@@ -61,6 +61,10 @@ program.command('dev')
             __HOT__ = true;
             var core = require('./core');
             var config = require('./config.js');
+            if(target.indexOf('/')===-1){
+                target = target+'/index';
+            }
+            config.target = target.split('/')[0];
             spinner.start();
             if(typeof target==='string'){
                 core.runDevServer(target);

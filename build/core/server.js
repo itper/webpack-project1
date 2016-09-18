@@ -5,7 +5,9 @@ const fs = require("fs");
 const colors = require('colors');
 require('babel-polyfill');
 const webpackMiddleware = require('koa-webpack-middleware');
-
+const serveIndex = require('serve-index');
+const router = require('koa-router')();
+const convert = require('koa-convert');
 
 function Server(compiler,config){
     this.config = config;
@@ -21,7 +23,14 @@ function Server(compiler,config){
 
     this.loadDll(compiler.outputFileSystem);
     this.app = new Koa();
-    this.app.use(dev).use(hot);
+    //req.url = rewriteTarget;
+    router.get('*',function(ctx,next){
+        var rewriteTarget = '/'+config.target;
+        ctx.req.url = rewriteTarget;
+        next();
+    });
+    this.app.use(dev).use(hot).use(router.routes()).use(router.allowedMethods()).use(dev).use(hot);
+
 }
 Server.prototype.run = function(){
     this.app.listen(this.config.port,function(){
